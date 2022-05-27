@@ -24,8 +24,8 @@ public class DemoService {
         return demoDAO.getTeam();
     }
 
-    public void addTeammate(String teammate){
-        demoDAO.addTeammate(teammate);
+    public List<String> addTeammate(String teammate){
+        return demoDAO.addTeammate(teammate);
     }
 
     public List<String> getMembers() {

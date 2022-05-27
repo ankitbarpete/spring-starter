@@ -19,8 +19,9 @@ public class DemoDAO {
         return team;
     }
 
-    public void addTeammate(String teammate){
+    public List<String> addTeammate(String teammate){
         team.addTeamMember(teammate);
+        return team.getTeamMembers();
     }
 
     public List<String> getMembers() {

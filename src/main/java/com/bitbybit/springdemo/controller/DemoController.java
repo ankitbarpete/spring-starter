@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -18,6 +19,13 @@ public class DemoController {
 
     public DemoController(@Autowired DemoService demoService) {
         this.demoService = demoService;
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<Object> home() {
+        HashMap<String, String> result = new HashMap<>();
+        result.put("Status", "Running");
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/team")
@@ -40,15 +48,16 @@ public class DemoController {
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/api-detail")
-    public String getApiDetail() {
-        return "This Backend is Developed on Spring and Java by BitByBit";
+    @GetMapping("/detail")
+    public ResponseEntity<HashMap<String, String>> getApiDetail() {
+        HashMap<String, String> result = new HashMap<>();
+        result.put("Stack", "Java, Spring Boot");
+        return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/add-member")
-    public ResponseEntity<Void> addTeammate(@RequestBody String teamMember) {
-        demoService.addTeammate(teamMember);
-        return ResponseEntity.ok().build();
+    @PostMapping("/addmember")
+    public ResponseEntity<List<String>> addTeammate(@RequestBody MemberForm teamMember) {
+        return ResponseEntity.ok(demoService.addTeammate(teamMember.newmember));
     }
 
     static class TeamForm {
@@ -62,5 +71,10 @@ public class DemoController {
         public void setTeamName(String teamName) {
             this.teamName = teamName;
         }
+    }
+
+    static class MemberForm{
+        private String newmember;
+
     }
 }
